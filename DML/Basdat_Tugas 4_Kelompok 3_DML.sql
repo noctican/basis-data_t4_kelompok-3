@@ -17,25 +17,46 @@ DELETE FROM retur;
 DELETE FROM detail_transaksi;
 DELETE FROM pelanggan_transaksi;
 DELETE FROM transaksi;
-DBCC CHECKIDENT ('transaksi', RESEED, 1);
 DELETE FROM detail_keranjang;
 DELETE FROM keranjang;
-DBCC CHECKIDENT ('keranjang', RESEED, 1);
 DELETE FROM alamat_pelanggan;
 DELETE FROM pelanggan;
 DELETE FROM karyawan;
 DELETE FROM departemen;
-DBCC CHECKIDENT ('departemen', RESEED, 1);
 DELETE FROM pengguna;
-DBCC CHECKIDENT ('pengguna', RESEED, 1);
 DELETE FROM varian_produk;
 DELETE FROM produk;
-DBCC CHECKIDENT ('produk', RESEED, 1);
 DELETE FROM sub_kategori;
-DBCC CHECKIDENT ('sub_kategori', RESEED, 1);
 DELETE FROM kategori;
-DBCC CHECKIDENT ('kategori', RESEED, 1);
 DELETE FROM member;
+GO
+
+IF EXISTS (SELECT 1 FROM sys.identity_columns WHERE object_id = OBJECT_ID('retur') AND last_value IS NOT NULL) 
+    DBCC CHECKIDENT ('retur', RESEED, 0);
+
+IF EXISTS (SELECT 1 FROM sys.identity_columns WHERE object_id = OBJECT_ID('transaksi') AND last_value IS NOT NULL) 
+    DBCC CHECKIDENT ('transaksi', RESEED, 0);
+
+IF EXISTS (SELECT 1 FROM sys.identity_columns WHERE object_id = OBJECT_ID('keranjang') AND last_value IS NOT NULL) 
+    DBCC CHECKIDENT ('keranjang', RESEED, 0);
+
+IF EXISTS (SELECT 1 FROM sys.identity_columns WHERE object_id = OBJECT_ID('alamat_pelanggan') AND last_value IS NOT NULL) 
+    DBCC CHECKIDENT ('alamat_pelanggan', RESEED, 0);
+
+IF EXISTS (SELECT 1 FROM sys.identity_columns WHERE object_id = OBJECT_ID('departemen') AND last_value IS NOT NULL) 
+    DBCC CHECKIDENT ('departemen', RESEED, 0);
+
+IF EXISTS (SELECT 1 FROM sys.identity_columns WHERE object_id = OBJECT_ID('pengguna') AND last_value IS NOT NULL) 
+    DBCC CHECKIDENT ('pengguna', RESEED, 0);
+
+IF EXISTS (SELECT 1 FROM sys.identity_columns WHERE object_id = OBJECT_ID('produk') AND last_value IS NOT NULL) 
+    DBCC CHECKIDENT ('produk', RESEED, 0);
+
+IF EXISTS (SELECT 1 FROM sys.identity_columns WHERE object_id = OBJECT_ID('sub_kategori') AND last_value IS NOT NULL) 
+    DBCC CHECKIDENT ('sub_kategori', RESEED, 0);
+
+IF EXISTS (SELECT 1 FROM sys.identity_columns WHERE object_id = OBJECT_ID('kategori') AND last_value IS NOT NULL) 
+    DBCC CHECKIDENT ('kategori', RESEED, 0);
 GO
 
 ALTER TABLE departemen CHECK CONSTRAINT fk_manajer_departemen;
